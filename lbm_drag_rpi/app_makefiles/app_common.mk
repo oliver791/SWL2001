@@ -276,7 +276,25 @@ COMMON_C_INCLUDES +=  \
 	-Iradio_hal\
 	-Ismtc_modem_hal\
 	-I$(LORA_BASICS_MODEM)/smtc_modem_api\
-	-I$(LORA_BASICS_MODEM)/smtc_modem_hal
+	-I$(LORA_BASICS_MODEM)/smtc_modem_hal\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/logging\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/modem_supervisor\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/modem_utilities\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/lorawan_packages\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/lorawan_packages/lorawan_certification\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/lorawan_manager\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/lorawan_api\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/smtc_ral/src\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/smtc_ralf/src\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/lr1mac\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/lr1mac/src\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/lr1mac/src/services\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/radio_planner/src\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/smtc_modem_crypto\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/smtc_modem_crypto/smtc_secure_element\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/lorawan_api\
+	-I$(LORA_BASICS_MODEM)/smtc_modem_core/lr1mac/src/smtc_real/src\
 
 #-----------------------------------------------------------------------------
 # Gather everything
