@@ -39,33 +39,24 @@
 #include <stdint.h>   // C99 types
 #include <stdbool.h>  // bool type
 #include <unistd.h>   // fork
-#include <sys/wait.h> // wait
+#include <sys/wait.h> // waitpid
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>   // strcmp
 
 #include "main.h"
 
 /*
  * -----------------------------------------------------------------------------
- * --- PRIVATE MACROS-----------------------------------------------------------
+ * --- CONFIGURABLE GLOBALS (defaults, overridden by command line) -------------
  */
+uint32_t g_uplink_period_s   = 60;
+uint8_t  g_packet_size       = 12;
+bool     g_packet_size_fixed = true;
 
 /*
  * -----------------------------------------------------------------------------
- * --- PRIVATE CONSTANTS -------------------------------------------------------
- */
-
-/*
- * -----------------------------------------------------------------------------
- * --- PRIVATE TYPES -----------------------------------------------------------
- */
-
-/*
- * -----------------------------------------------------------------------------
- * --- PRIVATE VARIABLES -------------------------------------------------------
- */
-
-/**
- * Modem application (can be chosen during build or here)
- * See @ref modem_application_t
+ * --- APPLICATION SELECTION ---------------------------------------------------
  */
 #ifndef MAKEFILE_APP
 #pragma GCC warning "Using default application PERIODICAL_UPLINK"
@@ -74,39 +65,78 @@
 
 /*
  * -----------------------------------------------------------------------------
- * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
- */
-
-/*
- * -----------------------------------------------------------------------------
  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
  */
 
-/*!
- * Fork-loop to restart on mcu_panic
- */
-int main( void )
+int main( int argc, char* argv[] )
 {
+    /* --- Parse command-line arguments ---
+     *  argv[1] = period_s
+     *  argv[2] = packet_size (max size if variable mode, 1-222)
+     *  argv[3] = "fixed" or "var"
+     */
+    if( argc >= 2 )
+    {
+        int p = atoi( argv[1] );
+        if( p < 1 )
+        {
+            p = 1;
+        }
+        g_uplink_period_s = ( uint32_t ) p;
+    }
+
+    if( argc >= 3 )
+    {
+        int s = atoi( argv[2] );
+        if( s < 1 )
+        {
+            s = 1;
+        }
+        if( s > 222 )
+        {
+            s = 222;
+        }
+        g_packet_size = ( uint8_t ) s;
+    }
+
+    if( argc >= 4 )
+    {
+        if( strcmp( argv[3], "var" ) == 0 ||
+            strcmp( argv[3], "variable" ) == 0 ||
+            strcmp( argv[3], "1" ) == 0 )
+        {
+            g_packet_size_fixed = false;
+        }
+        else
+        {
+            g_packet_size_fixed = true;
+        }
+    }
+
+    printf( "=== LoRaWAN Periodical Uplink ===\n" );
+    printf( "  Period:      %u s\n", ( unsigned ) g_uplink_period_s );
+    printf( "  Packet size: %u bytes (%s)\n", ( unsigned ) g_packet_size,
+            g_packet_size_fixed ? "FIXED" : "VARIABLE 1..max" );
+    printf( "=================================\n" );
+
+    /* --- Fork-loop: restarts the app on mcu_panic (exit code 3) --- */
     pid_t cpid;
-    int wstatus = 0;
+    int   wstatus = 0;
+
     do
     {
-        if ((cpid = fork()) == 0)
+        if( ( cpid = fork( ) ) == 0 )
         {
 #if MAKEFILE_APP == PERIODICAL_UPLINK
-            // This example show how to send data on an external event.
             main_periodical_uplink( );
 #elif MAKEFILE_APP == PORTING_TESTS
             main_porting_tests( );
 #else
-#error "Unknown application" ## MAKEFILE_APP
+#error "Unknown application"
 #endif
         }
-        waitpid(cpid, &wstatus, 0);
-    } while (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) == 3);
-}
+        waitpid( cpid, &wstatus, 0 );
+    } while( WIFEXITED( wstatus ) && WEXITSTATUS( wstatus ) == 3 );
 
-/*
- * -----------------------------------------------------------------------------
- * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
- */
+    return 0;
+}
