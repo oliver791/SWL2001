@@ -88,9 +88,9 @@ int main( int argc, char* argv[] )
     if( argc >= 3 )
     {
         int s = atoi( argv[2] );
-        if( s < 1 )
+        if( s < 0 )
         {
-            s = 1;
+            s = 0;
         }
         if( s > 222 )
         {
