@@ -548,7 +548,7 @@ static void modem_event_callback( void )
             SMTC_HAL_TRACE_INFO( "Event received: JOINED\n" );
             SMTC_HAL_TRACE_INFO( "Modem is now joined \n" );
 
-            send_uplink_counter_on_port( 101 );
+            //send_uplink_counter_on_port( 101 );
             ASSERT_SMTC_MODEM_RC( smtc_modem_alarm_start_timer( g_uplink_period_s ) );
 
             {
