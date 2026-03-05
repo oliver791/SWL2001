@@ -127,13 +127,14 @@ The EXTRA field is a JSON object enclosed in double-quotes with escaped internal
 
 ### Example CSV
 
-```csv
+```text
 TIMESTAMP,DEVEUI,EVENT,DATA,SF,EXTRA
-&quot;2026-02-24--14-44-25&quot;,&quot;636E616D00000002&quot;,&quot;JOINFAIL&quot;,&quot;&quot;,&quot;SF12&quot;,&quot;{&quot;&quot;reason&quot;&quot; : &quot;&quot;JOINFAIL&quot;&quot;}&quot;
-&quot;2026-02-24--14-44-45&quot;,&quot;636E616D00000002&quot;,&quot;JOINED&quot;,&quot;&quot;,&quot;SF8&quot;,&quot;{&quot;&quot;reason&quot;&quot; : &quot;&quot;Modem is now joined&quot;&quot;}&quot;
-&quot;2026-02-24--14-44-45&quot;,&quot;636E616D00000002&quot;,&quot;TX&quot;,&quot;B49F&quot;,&quot;SF8&quot;,&quot;{&quot;&quot;port&quot;&quot; : &quot;&quot;101&quot;&quot;, &quot;&quot;counter&quot;&quot; : &quot;&quot;0&quot;&quot;, &quot;&quot;size&quot;&quot; : &quot;&quot;2&quot;&quot;, &quot;&quot;size_mode&quot;&quot; : &quot;&quot;variable&quot;&quot;, &quot;&quot;size_max&quot;&quot; : &quot;&quot;40&quot;&quot;, &quot;&quot;period&quot;&quot; : &quot;&quot;10&quot;&quot;}&quot;
-&quot;2026-02-24--14-44-49&quot;,&quot;636E616D00000002&quot;,&quot;TXDONE&quot;,&quot;&quot;,&quot;SF12&quot;,&quot;{&quot;&quot;status&quot;&quot; : &quot;&quot;OK&quot;&quot;}&quot;
+&quot;2026-02-24--14-44-25&quot;,&quot;636E616D00000002&quot;,&quot;JOINFAIL&quot;,&quot;&quot;,&quot;SF12&quot;,&quot;{&quot;&quot;reason&quot;&quot;:&quot;&quot;JOINFAIL&quot;&quot;}&quot;
+&quot;2026-02-24--14-44-45&quot;,&quot;636E616D00000002&quot;,&quot;JOINED&quot;,&quot;&quot;,&quot;SF8&quot;,&quot;{&quot;&quot;reason&quot;&quot;:&quot;&quot;Modem is now joined&quot;&quot;}&quot;
+&quot;2026-02-24--14-44-45&quot;,&quot;636E616D00000002&quot;,&quot;TX&quot;,&quot;B49F&quot;,&quot;SF8&quot;,&quot;{&quot;&quot;port&quot;&quot;:&quot;&quot;101&quot;&quot;,&quot;&quot;counter&quot;&quot;:&quot;&quot;0&quot;&quot;}&quot;
+&quot;2026-02-24--14-44-49&quot;,&quot;636E616D00000002&quot;,&quot;TXDONE&quot;,&quot;&quot;,&quot;SF12&quot;,&quot;{&quot;&quot;status&quot;&quot;:&quot;&quot;OK&quot;&quot;}&quot;
 ```
+
 
 ## Troubleshooting
 
