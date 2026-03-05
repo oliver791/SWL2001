@@ -157,7 +157,7 @@ TIMESTAMP,DEVEUI,EVENT,DATA,SF,EXTRA
            |
            v
       lorawan-*.csv
-      (local file)
+      (local file, when --log is enabled)
 
 1. The application joins the LoRaWAN network (OTAA)
 2. Every 60 s, it sends an uplink with an incrementing counter (by default)
