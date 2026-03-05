@@ -147,16 +147,16 @@ TIMESTAMP,DEVEUI,EVENT,DATA,SF,EXTRA
 | undefined reference linking errors | Ensure you are inside `lbm_drag_rpi/` when running `make` |
 
 ## How It Works
-
-```
 +--------------+    SPI     +----------+   LoRaWAN   +--------------+
-| Raspberry Pi |&lt;----------&gt;|  SX1276  |&lt;-----------&gt;| LoRa Gateway |
+| Raspberry Pi |<---------->|  SX1276  |<----------->| LoRa Gateway |
 |              |  GPIO      | (RFM95W) |   868 MHz   |              |
 +------+-------+            +----------+             +--------------+
        |
        v
   lorawan-*.csv
-  (local file, when --log is enabled)
+  (local file)
+```
+
 ```
 
 1. The application joins the LoRaWAN network (OTAA)
