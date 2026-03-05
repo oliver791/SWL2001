@@ -146,23 +146,27 @@ TIMESTAMP,DEVEUI,EVENT,DATA,SF,EXTRA
 | Compilation errors               | Verify `C_INCLUDE_PATH` export (see Build step 4)           |
 | undefined reference linking errors | Ensure you are inside `lbm_drag_rpi/` when running `make` |
 
-## How It Works
-+--------------+    SPI     +----------+   LoRaWAN   +--------------+
-| Raspberry Pi |<---------->|  SX1276  |<----------->| LoRa Gateway |
-|              |  GPIO      | (RFM95W) |   868 MHz   |              |
-+------+-------+            +----------+             +--------------+
-       |
-       v
-  lorawan-*.csv
-  (local file)
+---
 
-```
+## How It Works
+
+    +--------------+    SPI     +----------+   LoRaWAN   +--------------+
+    | Raspberry Pi |<---------->|  SX1276  |<----------->| LoRa Gateway |
+    |              |  GPIO      | (RFM95W) |   868 MHz   |              |
+    +------+-------+            +----------+             +--------------+
+           |
+           v
+      lorawan-*.csv
+      (local file)
 
 1. The application joins the LoRaWAN network (OTAA)
-2. Every N seconds (configurable), it sends an uplink with a random payload
-3. When `--log` is enabled, all events (TX, RX, JOIN, JOINFAIL) are logged to a local CSV file
+2. Every 60 s, it sends an uplink with an incrementing counter (by default)
+3. All events (TX, RX, JOIN, JOINFAIL) are logged to a local CSV file
 4. Radio parameters (SF, BW, CR, frequency) and MAC parameters (data rate, ADR, duty cycle) are captured at each TX event
 5. Downlink RSSI/SNR are extracted from metadata
+
+---
+
 
 ## License
 
