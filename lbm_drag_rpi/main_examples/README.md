@@ -125,15 +125,17 @@ When `--log` is enabled, a file named `lorawan-YYYY-MM-DD--HH-MM-SS.csv` is crea
 
 The EXTRA field is a JSON object enclosed in double-quotes with escaped internal quotes. This allows easy parsing with `json.loads()` in Python.
 
-### Example CSV
+### Example CSV row
 
-```text
-TIMESTAMP,DEVEUI,EVENT,DATA,SF,EXTRA
-&quot;2026-02-24--14-44-25&quot;,&quot;636E616D00000002&quot;,&quot;JOINFAIL&quot;,&quot;&quot;,&quot;SF12&quot;,&quot;{&quot;&quot;reason&quot;&quot;:&quot;&quot;JOINFAIL&quot;&quot;}&quot;
-&quot;2026-02-24--14-44-45&quot;,&quot;636E616D00000002&quot;,&quot;JOINED&quot;,&quot;&quot;,&quot;SF8&quot;,&quot;{&quot;&quot;reason&quot;&quot;:&quot;&quot;Modem is now joined&quot;&quot;}&quot;
-&quot;2026-02-24--14-44-45&quot;,&quot;636E616D00000002&quot;,&quot;TX&quot;,&quot;B49F&quot;,&quot;SF8&quot;,&quot;{&quot;&quot;port&quot;&quot;:&quot;&quot;101&quot;&quot;,&quot;&quot;counter&quot;&quot;:&quot;&quot;0&quot;&quot;}&quot;
-&quot;2026-02-24--14-44-49&quot;,&quot;636E616D00000002&quot;,&quot;TXDONE&quot;,&quot;&quot;,&quot;SF12&quot;,&quot;{&quot;&quot;status&quot;&quot;:&quot;&quot;OK&quot;&quot;}&quot;
-```
+| Field     | Value                                                              |
+|-----------|--------------------------------------------------------------------|
+| TIMESTAMP | 2026-02-24--14-44-45                                               |
+| DEVEUI    | 636E616D00000002                                                   |
+| EVENT     | TX                                                                 |
+| DATA      | B49F                                                               |
+| SF        | SF8                                                                |
+| EXTRA     | `{"port":"101","counter":"0","size":"2","size_mode":"variable"}`   |
+
 
 
 ## Troubleshooting
