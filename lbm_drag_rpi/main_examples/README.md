@@ -155,7 +155,6 @@ TIMESTAMP,DEVEUI,EVENT,DATA,SF,EXTRA
        v
   lorawan-*.csv
   (local file)
-```
 
 ```
 
