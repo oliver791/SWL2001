@@ -78,9 +78,6 @@ Edit `lbm_drag_rpi/main_examples/example_options.h` with your device credentials
 ### 4. Build
 
 ```bash
-# Export LBM internal headers path (required for compilation)
-export C_INCLUDE_PATH=$(find ~/SWL2001/lbm_lib -name &quot;*.h&quot; -printf &#x27;%h\n&#x27; | sort -u | tr &#x27;\n&#x27; &#x27;:&#x27;)
-
 # Build the application
 cd ~/SWL2001/lbm_drag_rpi
 make full_sx1276
