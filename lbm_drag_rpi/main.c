@@ -53,6 +53,7 @@
 uint32_t g_uplink_period_s   = 60;
 uint8_t  g_packet_size       = 12;
 bool     g_packet_size_fixed = true;
+bool     g_log = true;
 
 /*
  * -----------------------------------------------------------------------------
@@ -70,11 +71,17 @@ bool     g_packet_size_fixed = true;
 
 int main( int argc, char* argv[] )
 {
-    /* --- Parse command-line arguments ---
-     *  argv[1] = period_s
-     *  argv[2] = packet_size (max size if variable mode, 1-222)
-     *  argv[3] = "fixed" or "var"
-     */
+    // --- Parse command-line arguments ---
+    if ( argc > 1 && strcmp(argv[1], "--help") == 0)
+    {
+        printf(
+            "argv[1] = period_s (int > 0)\n"
+            "argv[2] = packet_size (max size if variable mode, 0-222)\n"
+            "argv[3] = \"fixed\"/\"var\"/\"1\" | --no-log\n"
+        );
+        return 1;
+    }
+
     if( argc >= 2 )
     {
         int p = atoi( argv[1] );
@@ -110,6 +117,10 @@ int main( int argc, char* argv[] )
         else
         {
             g_packet_size_fixed = true;
+        }
+
+        if( strcmp( argv[3], "--no-log" ) == 0 ) {
+            g_log = false;
         }
     }
 

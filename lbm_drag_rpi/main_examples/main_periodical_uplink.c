@@ -469,11 +469,14 @@ void main_periodical_uplink( void )
 
     smtc_modem_init( &modem_event_callback );
 
-    if( csv_init( ) != 0 )
+    if(g_log)
     {
-        SMTC_HAL_TRACE_ERROR( "CSV init failed, continuing without CSV logging\n" );
+        if( csv_init( ) != 0 )
+        {
+            SMTC_HAL_TRACE_ERROR( "CSV init failed, continuing without CSV logging\n" );
+        }
+        atexit( csv_close );
     }
-    atexit( csv_close );
 
     SMTC_HAL_TRACE_INFO( "Periodical uplink example is starting\n" );
     SMTC_HAL_TRACE_INFO( "  Period:      %d s\n", g_uplink_period_s );
@@ -563,7 +566,10 @@ static void modem_event_callback( void )
                     sf_txt = sx127x_sf_to_str( radio->lora_mod_params.sf );
                 }
 
-                csv_write_row( user_dev_eui, "JOINED", NULL, 0, sf_txt, extra );
+                if( g_log )
+                {
+                    csv_write_row( user_dev_eui, "JOINED", NULL, 0, sf_txt, extra );
+                }
             }
             break;
 
@@ -578,8 +584,12 @@ static void modem_event_callback( void )
                 {
                     sf_txt = sx127x_sf_to_str( radio->lora_mod_params.sf );
                 }
-                csv_write_row( user_dev_eui, "TXDONE", NULL, 0, sf_txt,
-                               "{\"status\" : \"OK\"}" );
+
+                if( g_log )
+                {
+                    csv_write_row( user_dev_eui, "TXDONE", NULL, 0, sf_txt,
+                        "{\"status\" : \"OK\"}" );
+                }
             }
             break;
 
@@ -699,8 +709,11 @@ static void modem_event_callback( void )
                               ( unsigned ) rx_metadata.fport,
                               ( unsigned long ) freq_hz, ( double ) freq_hz / 1e6 );
                 }
-
-                csv_write_row( user_dev_eui, "DOWNDATA", rx_payload, rx_payload_size, sf_txt, extra );
+                
+                if( g_log )
+                {
+                    csv_write_row( user_dev_eui, "DOWNDATA", rx_payload, rx_payload_size, sf_txt, extra );
+                }
             }
             break;
 
@@ -719,7 +732,10 @@ static void modem_event_callback( void )
                     sf_txt = sx127x_sf_to_str( radio->lora_mod_params.sf );
                 }
 
-                csv_write_row( user_dev_eui, "JOINFAIL", NULL, 0, sf_txt, extra );
+                if ( g_log )
+                {
+                    csv_write_row( user_dev_eui, "JOINFAIL", NULL, 0, sf_txt, extra );
+                }
             }
             break;
 
@@ -777,7 +793,10 @@ static void modem_event_callback( void )
             SMTC_HAL_TRACE_INFO( "Event received: FIRMWARE_MANAGEMENT\n" );
             if( current_event.event_data.fmp.status == SMTC_MODEM_EVENT_FMP_REBOOT_IMMEDIATELY )
             {
-                csv_close( );
+                if ( g_log )
+                {
+                    csv_close( );
+                }
                 smtc_modem_hal_reset_mcu( );
             }
             break;
@@ -1007,7 +1026,10 @@ static void send_uplink_counter_on_port( uint8_t port )
                   ( unsigned ) max_duty_cycle_index,
                   ( unsigned ) rx1_delay_s );
 
-        csv_write_row( user_dev_eui, "TX", payload, payload_size, sf_txt, extra2 );
+        if ( g_log )
+        {
+            csv_write_row( user_dev_eui, "TX", payload, payload_size, sf_txt, extra2 );
+        }
     }
     /* --- fin CSV logging --- */
 

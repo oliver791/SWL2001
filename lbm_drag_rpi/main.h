@@ -17,6 +17,7 @@ extern "C" {
 extern uint32_t g_uplink_period_s;
 extern uint8_t  g_packet_size;
 extern bool     g_packet_size_fixed;
+extern bool     g_log;
 
 /* --- Application entry points --- */
 void main_periodical_uplink( void );
